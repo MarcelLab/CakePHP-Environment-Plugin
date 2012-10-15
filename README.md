@@ -11,7 +11,7 @@ Then, add this CakePlugin::load in the app bootstrap and active the plugin boots
 
 > CakePlugin::load('Environment', array('bootstrap' => true));
 
-Add a new Evironment
+Add a new Environment
 --------------------
 
 Execute in the Shell:
