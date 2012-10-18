@@ -30,6 +30,6 @@ The environment name is defined in the server configuration with SetEnv, the var
 - CAKE_ENV
 - ENVIRONMENT
 
-The Shell creates an "environments" directory and create one php file for each environement.
+The Shell creates an "environments" directory and create one php file for each environment.
 The database and the email configuration is took from the app "database.php" and "email.php" for the first environment,
 for the followers, it takes the default configurations.
