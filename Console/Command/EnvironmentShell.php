@@ -88,16 +88,18 @@ class EnvironmentShell extends Shell
         }
         foreach( array( $this->_databaseFile, $this->_emailFile ) as $index => $file ) {
             $handle = @fopen($file, "r");
-            if ( ! $handle || ! preg_match( sprintf ( '/class\s+%s\s*\{/', $classList[$index ] ), fread( $handle, filesize ( $file ) ) ) ) {
-                fclose($handle);
+            if ( $handle === false || ! preg_match( sprintf ( '/class\s+%s\s*\{/', $classList[$index ] ), fread( $handle, filesize ( $file ) ) ) ) {
+                var_dump('here');
+                if($handle !== false) fclose($handle);
                 $file = $file . '.default';
                 $handle = @fopen($file, "r");
-                if ( ! $handle ) {
-                    throw new CakeException( "The file {$file}.config the was found" );
+                if ( $handle === false ) {
+                    throw new CakeException( "The file {$file}.default the was found" );
                 }
             }
-
+            fseek($handle, 0);
             $configList[] = "\t" . self::_selectConfiguration( fread( $handle, filesize ( $file ) ) );
+            var_dump($configList);
             fclose($handle);
 
         }
@@ -125,7 +127,7 @@ class EnvironmentShell extends Shell
         foreach( array( $this->_databaseFile, $this->_emailFile ) as $file ) {
             $handle = @fopen ( $file, "r" );
             if ( ! $handle ) {
-                throw new CakeException( "The file {$file}.config the was found" );
+                throw new CakeException( "The file {$file} the was found" );
             }
             $content = fread ( $handle, filesize ( $file ) );
             fclose ( $handle );
