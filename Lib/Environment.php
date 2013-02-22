@@ -12,7 +12,7 @@
  */
 class Environment
 {
-    const DIRNAME = 'environments';
+    const DIRNAME = 'Environments';
     const DBCONFIGFILE = 'database.php';
     const EMAILCONFIGFILE = 'email.php';
     const DBCLASS = 'DATABASE_CONFIG';
