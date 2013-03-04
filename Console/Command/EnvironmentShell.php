@@ -89,7 +89,6 @@ class EnvironmentShell extends Shell
         foreach( array( $this->_databaseFile, $this->_emailFile ) as $index => $file ) {
             $handle = @fopen($file, "r");
             if ( $handle === false || ! preg_match( sprintf ( '/class\s+%s\s*\{/', $classList[$index ] ), fread( $handle, filesize ( $file ) ) ) ) {
-                var_dump('here');
                 if($handle !== false) fclose($handle);
                 $file = $file . '.default';
                 $handle = @fopen($file, "r");
@@ -99,7 +98,6 @@ class EnvironmentShell extends Shell
             }
             fseek($handle, 0);
             $configList[] = "\t" . self::_selectConfiguration( fread( $handle, filesize ( $file ) ) );
-            var_dump($configList);
             fclose($handle);
 
         }
