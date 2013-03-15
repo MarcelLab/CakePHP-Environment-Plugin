@@ -165,7 +165,7 @@ class Environment
      */
     public static function isConsole ()
     {
-        return isset ( $_SERVER['argv'] );
+        return isset ( $_SERVER['argc'] ) && is_numeric( $_SERVER['argc'] ) && $_SERVER['argc'] > 0;
     }
 
     /**
