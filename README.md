@@ -1,13 +1,12 @@
 CakePHP-Environment-Plugin
 ==========================
 
-Plugin used to manage environments on CakePhp 2.x.
-__Still in development branch, switch to this branch to get it.__
+Plugin used to manage environments on CakePhp 2.x
 
 Setup
 -----
 
-You need to clone the files into an Environment directory in app/Plugin.
+You need to clone the files into an "Environment" directory in app/Plugin.
 Then, add this CakePlugin::load in the app bootstrap and active the plugin bootstrap :
 
 > CakePlugin::load('Environment', array('bootstrap' => true));
@@ -30,6 +29,6 @@ The environment name is defined in the server configuration with SetEnv, the var
 - CAKE_ENV
 - ENVIRONMENT
 
-The Shell creates an "environments" directory and create one php file for each environment.
+The Shell creates an "Environments" directory and create one php file for each environment.
 The database and the email configuration is took from the app "database.php" and "email.php" for the first environment,
 for the followers, it takes the default configurations.
