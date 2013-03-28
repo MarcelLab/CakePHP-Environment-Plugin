@@ -10,7 +10,7 @@
  * @author Vivien Ripoche <vivien.ripoche@marcelww.com> 
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-class Environment
+class Environment extends Object
 {
     const DIRNAME = 'Environments';
     const DBCONFIGFILE = 'database.php';
@@ -28,6 +28,7 @@ class Environment
     private $_pluginConfigDir = null;
 
     private $_dbConfig = null;
+    private $_dtsConfig = null;
     private $_emailConfig = null;
 
     /**
@@ -86,7 +87,10 @@ class Environment
         if ( class_exists ( self::EMAILCONFIGFILE ) ) {
             throw new CakeException ( 'EmailConfig class exists, you must delete it if you want use environments.' );
         }
-
+        
+        $this->_dtsConfig = array();
+        $datasources = array();
+        
         require_once ( $this->_envFile );
 
         if ( ! isset ( $database ) ) {
@@ -96,9 +100,13 @@ class Environment
         if ( ! isset ( $email ) ) {
             throw new CakeException ( sprintf ( '$email variable is not set in "%s.php".', $this->getEnv() ) );
         }
-
+        
         $this->_dbConfig = $database;
         $this->_emailConfig = $email;
+        
+        if ( $datasources && is_array( $datasources ) && !isset($datasources['default']) ) {
+            $this->_dtsConfig = $datasources;
+        }
 
         require_once( $this->_pluginConfigDir . self::DBCONFIGFILE );
         require_once( $this->_pluginConfigDir . self::EMAILCONFIGFILE );
@@ -117,6 +125,17 @@ class Environment
         return $this->_dbConfig;
     }
 
+     /**
+     * getDatasourcesConfiguration
+     * Accessor to get the datasources configurations.
+     * 
+     * @return array
+     */
+    public function getDatasourcesConfiguration ()
+    {
+        return $this->_dtsConfig;
+    }
+    
     /**
      * getEmailConfiguration 
      * Accessor to get the email configuration.
@@ -153,10 +172,27 @@ class Environment
                 break;
             }
         }
-        if( self::isConsole () ) $this->_environment = 'console';
+        if( self::isConsole () ) $this->_setConsoleEnvironment ();
+        
         return $this;
     }
-
+    
+    /**
+     * _setConsoleEnvironment 
+     * Get the "-dev" argrument in the CLI context.
+     *
+     * @return $this
+     */
+    private function _setConsoleEnvironment ()
+    {
+        foreach( $_SERVER['argv'] as $index => $argument ) {
+            if( $argument == '-env' ) {
+                $this->_environment = isset( $_SERVER['argv'][$index + 1] ) ? $this->_environment : $_SERVER['argv'][$index + 1];
+            }
+        }
+        return $this;
+    }
+    
     /**
      * isConsole 
      * Check if the program is in the CLI context.
