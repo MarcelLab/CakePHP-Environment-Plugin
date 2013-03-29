@@ -186,8 +186,8 @@ class Environment extends Object
     private function _setConsoleEnvironment ()
     {
         foreach( $_SERVER['argv'] as $index => $argument ) {
-            if( $argument == '-env' ) {
-                $this->_environment = isset( $_SERVER['argv'][$index + 1] ) ? $this->_environment : $_SERVER['argv'][$index + 1];
+            if( $argument == '--env' ) {
+                $this->_environment = isset( $_SERVER['argv'][$index + 1] ) ? $_SERVER['argv'][$index + 1] : $this->_environment;
             }
         }
         return $this;

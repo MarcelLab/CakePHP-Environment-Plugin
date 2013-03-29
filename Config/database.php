@@ -11,6 +11,7 @@
 class DATABASE_CONFIG
 {
     public $default = null;
+    public $test = null;
 
     /**
      * __construct 
@@ -20,5 +21,6 @@ class DATABASE_CONFIG
     public function __construct ()
     {
         $this->default = Environment::getInstance()->getDatabaseConfiguration ();
+        $this->test = $this->default;
     }
 }
