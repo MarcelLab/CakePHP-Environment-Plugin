@@ -11,7 +11,7 @@
 class DATABASE_CONFIG
 {
     public $default = null;
-    public $test = null;
+    public $datasourcerest = null;
 
     /**
      * __construct 
@@ -21,6 +21,9 @@ class DATABASE_CONFIG
     public function __construct ()
     {
         $this->default = Environment::getInstance()->getDatabaseConfiguration ();
-        $this->test = $this->default;
+        $datasources = Environment::getInstance()->getDatasourcesConfiguration ();
+        foreach( $datasources as $key => $datasource ) {
+            $this->{$key} = $datasource;
+        }
     }
 }
