@@ -1,7 +1,7 @@
 <?php
 
 App::uses('ExceptionRenderer', 'Error');
-
+App::uses('AppExceptionRenderer', 'Error');
 /**
  * ConsoleExceptionRenderer 
  * Renderer class for console
@@ -25,7 +25,10 @@ class EnvironmentExceptionRenderer extends ExceptionRenderer
         if ( Environment::isConsole () ) {
             echo 'Error ' . $this->error->getCode () . ' - ' . str_replace( '<br />', "\n", $this->error->getMessage () );
         } else {
-            parent::render ();
+        	$renderClass = Configure::read('Exception.initRenderer');
+        	App::uses($renderClass, 'Error');
+        	$renderer = new $renderClass(new $this->error());
+            $renderer->render();
         }
     }
 }
