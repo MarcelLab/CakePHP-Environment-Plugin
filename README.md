@@ -32,3 +32,15 @@ The environment name is defined in the server configuration with SetEnv, the var
 The Shell creates an "Environments" directory and create one php file for each environment.
 The database and the email configuration is took from the app "database.php" and "email.php" for the first environment,
 for the followers, it takes the default configurations.
+
+In order to use a Console Environnement file in a shell, command shall be launched with '--env' variable. App will parse an accept this parameter after adding this method in the AppShell code :
+
+public function getOptionParser() {
+    $parser = parent::getOptionParser();
+    $parser->addOption('env', array(
+            'short' => 'e',
+            'help' => 'environment',
+            'default' => 'dev'
+    ));
+    return $parser;
+}

@@ -27,7 +27,7 @@ class EnvironmentExceptionRenderer extends ExceptionRenderer
         } else {
         	$renderClass = Configure::read('Exception.initRenderer');
         	App::uses($renderClass, 'Error');
-        	$renderer = new $renderClass(new $this->error());
+        	$renderer = new $renderClass(new $this->error($this->error->getMessage(), $this->error->getCode()));
             $renderer->render();
         }
     }
